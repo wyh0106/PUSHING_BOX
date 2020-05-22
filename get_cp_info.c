@@ -7,11 +7,6 @@
 // created by 魏懿航 at 05/19/2020
 // QQ:770593981
 
-#include <stdio.h>
-#include <conio.h>
-#include <string.h>
-#include <windows.h>
-
 #include "cJSON\cJSON.h"
 #include "cJSON\cJSON.c"
 

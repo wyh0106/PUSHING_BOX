@@ -13,6 +13,8 @@
 #define RF_FAULT -1
 #define EM_FAULT -2
 #define PUSH_NULL 0
+#define WIN 1
+#define QUIT 2
 
 #define CP "resource\\CP_INFO.json"
 #define BUFSIZE 256
@@ -24,7 +26,6 @@ char cp_number[13] = {0};
 
 extern int get_info(int checkpoint);
 extern int cp_transform(int _checkpoint);
-extern void control(void);
-
+extern int control(void);
 
 #endif

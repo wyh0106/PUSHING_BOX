@@ -7,9 +7,6 @@
 // created by 魏懿航 at 05/19/2020
 // QQ:770593981
 
-#include <stdio.h>
-#include <string.h>
-
 #include "PUSH.h"
 
 #define cp_ "checkpoint_"

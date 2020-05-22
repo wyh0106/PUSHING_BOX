@@ -8,6 +8,8 @@
 // QQ:770593981
 
 #include <stdio.h>
+#include <conio.h>
+#include <string.h>
 #include <windows.h>
 
 #include "PUSH.h"
@@ -17,42 +19,39 @@
 
 int main(void)
 {
-    int temp = 0, error_massage, CP_NUMBER;
+    int Key, li, error_massage, CP_NUMBER;
 
     //输入对应关卡
-    record_level:
-    printf("Please enter what level you want to play:");
-    scanf("%d", &CP_NUMBER);
+	while(li != QUIT)
+	{
+		printf("Please enter what level you want to play:");
+		scanf("%d", &CP_NUMBER);
 
-    //错误代码处理，如为0则正常运行
-    error_massage = get_info(CP_NUMBER);
-    switch(error_massage)
-    {
-        case -2:printf("Unknown mistake!\nCheck the function: get_info.\n");
-                goto record_level;// 回到关卡选择
+		//错误代码处理，如为0则正常运行
+		error_massage = get_info(CP_NUMBER);
+		switch(error_massage)
+		{
+			case -2:printf("Unknown mistake!\nCheck the function: get_info.\n");
+					return -1;
+			case -1:printf("Ensure the resource file are legal.");
+					return -1;
+			case  0:printf("Loading resource file succeessful.\n");
+					li = QUIT;
+					break;
+		}
+	}
 
-        case -1:printf("Ensure the resource file are legal.");
-                return -1;
+	Key = control();
 
-        case 0: printf("Loading resource file succeessful.\n");
-                break;
-    }
+	if(Key == WIN)
+	{
+		system("cls");
+		puts("==========");
+		puts(" YOU WIN!");
+		puts("==========");
+	}
 
-    control();
-
-    //调试用信息输出
-    //---------------------------
-    // for(; temp < mapsize; temp++)
-    // {
-    //     puts(Map[temp]);
-    // }
-
-    // printf("%d,%d\n\n", spx, spy);
-    // for(temp = 0; temp < EPsize; temp++)
-    // {
-    //     printf("%d %d\n", epx[temp], epy[temp]);
-    // }
-    //---------------------------
+	system("pause");
 
     return 0;
 }
