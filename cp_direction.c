@@ -2,7 +2,8 @@
 // All rights reserved.
 
 // filename:cp_direction.c
-// description:Just a simple pushing box game:)
+// description:用来实现对关卡名转换，
+// 			   转换成关卡资源文件中的键。
 
 // created by 魏懿航 at 05/19/2020
 // QQ:770593981

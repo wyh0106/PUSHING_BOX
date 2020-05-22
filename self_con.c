@@ -2,7 +2,7 @@
 // All rights reserved.
 
 // filename:cp_direction.c
-// description:Just a simple pushing bospx game:)
+// description:实现针对自机控制的函数
 
 // created by 魏懿航 at 05/19/2020
 // QQ:770593981
@@ -26,17 +26,17 @@ int control(void)
         }
 		row = 0;
 
-        key = getch();//从用户处读入一个指令
+        key = getch();//读取指令
 
-        if (key == 's')//小人向下
+        if (key == 's')//自机向下
         {
-            //不推箱子时实现向下
+            //没有接触箱子时的向下算法
             if (GO_DOWN)
             {
                 map_cache[Spx][Spy] = ' ';
                 map_cache[++Spx][Spy] = 'S';
             }
-            //推箱子时执行实现向下
+            //接触箱子时的向下算法
             else if (PUSH_DOWN)
             {
                 map_cache[Spx][Spy] = ' ';
@@ -47,9 +47,9 @@ int control(void)
             }
         }
 
-        else if (key == 'w')//小人向上 
+        else if (key == 'w')//自机向下
         {
-            //不推箱子的时候实现向上 
+            //没有接触箱子时的向上算法
             if (GO_UP)
             {
                 map_cache[Spx][Spy] = ' ';
@@ -57,7 +57,7 @@ int control(void)
                 map_cache[Spx][Spy] = 'S';
 
             }
-            //推箱子的时候实现向上
+            //接触箱子时的向上算法
             else if (PUSH_UP)
             {
                 map_cache[Spx][Spy] = ' ';
@@ -68,16 +68,16 @@ int control(void)
             }
         }
 
-        else if (key == 'd')
+        else if (key == 'd')//自机向右
         {
-            //不推箱子实现向右
+            //没有接触箱子时的向右算法
             if (GO_RIGHT)
             {
                 map_cache[Spx][Spy] = ' ';
                 Spy++;
                 map_cache[Spx][Spy] = 'S';
             }
-            //推箱子时实现向右
+            //接触箱子时的向右算法
             else if (PUSH_RIGHT)
             {
                 map_cache[Spx][Spy] = ' ';
@@ -88,15 +88,17 @@ int control(void)
             }
         }
 
-        else if (key == 'a')
+        else if (key == 'a')//自机向左
         {
-            if(GO_LEFT)//下一位置无箱子
+            if(GO_LEFT)
+			//没有接触箱子时的向左算法
             {
                 map_cache[Spx][Spy] = ' ';
                 Spy--;
                 map_cache[Spx][Spy] = 'S';
             }
-            else if(PUSH_LEFT)//下一位置存在箱子
+			//接触箱子时的向左算法
+            else if(PUSH_LEFT)
             {
                 map_cache[Spx][Spy] = ' ';
                 Spy -= 2;
@@ -107,13 +109,13 @@ int control(void)
         }
 
 		for(i=0;i<EPsize;i++)
-		{//自机和箱子到达*点的时候的控制
+		{//自机和箱子到达和离开*位时的变化
 			if(map_cache[epx[i]][epy[i]]=='O')
 				map_cache[epx[i]][epy[i]] = '@';
 			if(map_cache[epx[i]][epy[i]]!='@' && map_cache[epx[i]][epy[i]]!='S')
 				map_cache[epx[i]][epy[i]] = '*';
 		}
-
+		//胜利条件判定，四个胜利点必须均为@才允许胜利
 		{
 			int win_count = 0;
 			for(i=0;i<EPsize;i++)
@@ -125,13 +127,13 @@ int control(void)
 				return WIN;
 		}
 
-
+		//对用户提交的特殊需求进行处理
 		if(key=='B' || key=='b')
 			{//退出
 				return QUIT;
 			}
 			else if(key=='R' || key=='r')
-			{//重新开始
+			{//重置关卡信息
 				Spx = spx, Spy = spy;
 				memcpy(map_cache, Map, sizeof(map_cache));
 				system("cls");

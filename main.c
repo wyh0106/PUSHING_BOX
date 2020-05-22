@@ -24,10 +24,10 @@ int main(void)
     //输入对应关卡
 	while(li != QUIT)
 	{
-		printf("Please enter what level you want to play:");
+		printf("\nPlease enter what level you want to play:");
 		scanf("%d", &CP_NUMBER);
 
-		//错误代码处理，如为0则正常运行
+		//错误代码处理，为0则正常运行
 		error_massage = get_info(CP_NUMBER);
 		switch(error_massage)
 		{
@@ -36,13 +36,14 @@ int main(void)
 			case -1:printf("Ensure the resource file are legal.");
 					return -1;
 			case  0:printf("Loading resource file succeessful.\n");
-					li = QUIT;
+					li = QUIT;//只有正常运行才不会重复请求输入关卡号码
 					break;
 		}
 	}
 
+	//自机控制
 	Key = control();
-
+	//胜利条件检测及胜利界面打印
 	if(Key == WIN)
 	{
 		system("cls");

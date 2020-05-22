@@ -2,7 +2,7 @@
 // All rights reserved.
 
 // filename:get_cp_info.c
-// description:Just a simple pushing box game:)
+// description:从关卡资源文件中获取关卡信息
 
 // created by 魏懿航 at 05/19/2020
 // QQ:770593981
@@ -11,7 +11,6 @@
 #include "cJSON\cJSON.c"
 
 #include "PUSH.h"
-//#include "cp_direction.c"
 
 int get_info(int checkpoint_ID)
 {
@@ -26,7 +25,7 @@ int get_info(int checkpoint_ID)
     }
 
     level_INFO = fopen(CP, "r");//打开关卡信息文件
-    if(NULL == level_INFO)//关卡信息文件打开失败
+    if(NULL == level_INFO)//文件打开失败反馈
     {
         printf("FILE OPEN FAULT!");
         return RF_FAULT;
