@@ -7,6 +7,7 @@
 // created by 魏懿航 at 05/19/2020
 // QQ:770593981
 
+
 #include "PUSH.h"
 #include "CONTROL.h"
 
@@ -17,7 +18,7 @@ int control(void)
 
 	memcpy(map_cache, Map, sizeof(map_cache));
 
-	while(TRUE)
+	while(1)
 	{
 		system("cls");//显示部分
 		for (; row <= mapsize; row++) 
