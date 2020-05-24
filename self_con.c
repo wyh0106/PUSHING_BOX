@@ -6,145 +6,104 @@
 
 // created by 魏懿航 at 05/19/2020
 // QQ:770593981
-
+#include <string.h>
 
 #include "PUSH.h"
 #include "CONTROL.h"
+#include "wasd.c"
+
+int row, temp;
+char key;
+
+void wasd(void);
+void print_map(void);
+void reset_winpoint(void);
+int conditions_of_victory(void);
+void reset_checkpoint(void);
 
 int control(void)
 {
-    char map_cache [100][100], key;
-    int i, row = 0, Spx = spx, Spy = spy;
-
-	memcpy(map_cache, Map, sizeof(map_cache));
+	reset_checkpoint();
 
 	while(1)
 	{
-		system("cls");//显示部分
-		for (; row <= mapsize; row++) 
-        {
-            puts(map_cache[row]);
-        }
-		row = 0;
+		print_map();//打印地图
 
-        key = getch();//读取指令
+		wasd();//检测用户的指令
 
-        if (key == 's')//自机向下
-        {
-            //没有接触箱子时的向下算法
-            if (GO_DOWN)
-            {
-                map_cache[Spx][Spy] = ' ';
-                map_cache[++Spx][Spy] = 'S';
-            }
-            //接触箱子时的向下算法
-            else if (PUSH_DOWN)
-            {
-                map_cache[Spx][Spy] = ' ';
-                Spx += 2;
-                map_cache[Spx][Spy] = 'O';
-                Spx--;
-                map_cache[Spx][Spy] = 'S';
-            }
-        }
-
-        else if (key == 'w')//自机向下
-        {
-            //没有接触箱子时的向上算法
-            if (GO_UP)
-            {
-                map_cache[Spx][Spy] = ' ';
-                Spx--;
-                map_cache[Spx][Spy] = 'S';
-
-            }
-            //接触箱子时的向上算法
-            else if (PUSH_UP)
-            {
-                map_cache[Spx][Spy] = ' ';
-                Spx -= 2;
-                map_cache[Spx][Spy] = 'O';
-                Spx++;
-                map_cache[Spx][Spy] = 'S';
-            }
-        }
-
-        else if (key == 'd')//自机向右
-        {
-            //没有接触箱子时的向右算法
-            if (GO_RIGHT)
-            {
-                map_cache[Spx][Spy] = ' ';
-                Spy++;
-                map_cache[Spx][Spy] = 'S';
-            }
-            //接触箱子时的向右算法
-            else if (PUSH_RIGHT)
-            {
-                map_cache[Spx][Spy] = ' ';
-                Spy += 2;
-                map_cache[Spx][Spy] = 'O';
-                Spy--;
-                map_cache[Spx][Spy] = 'S';
-            }
-        }
-
-        else if (key == 'a')//自机向左
-        {
-            if(GO_LEFT)
-			//没有接触箱子时的向左算法
-            {
-                map_cache[Spx][Spy] = ' ';
-                Spy--;
-                map_cache[Spx][Spy] = 'S';
-            }
-			//接触箱子时的向左算法
-            else if(PUSH_LEFT)
-            {
-                map_cache[Spx][Spy] = ' ';
-                Spy -= 2;
-                map_cache[Spx][Spy] = 'O';
-                Spy++;
-                map_cache[Spx][Spy] = 'S';
-            }
-        }
-
-		for(i=0;i<EPsize;i++)
-		{//自机和箱子到达和离开*位时的变化
-			if(map_cache[epx[i]][epy[i]]=='O')
-				map_cache[epx[i]][epy[i]] = '@';
-			if(map_cache[epx[i]][epy[i]]!='@' && map_cache[epx[i]][epy[i]]!='S')
-				map_cache[epx[i]][epy[i]] = '*';
-		}
-		//胜利条件判定，四个胜利点必须均为@才允许胜利
-		{
-			int win_count = 0;
-			for(i=0;i<EPsize;i++)
-			{
-				if(map_cache[epx[i]][epy[i]] == '@')
-					win_count++;
-			}
-			if(win_count == EPsize)
-				return WIN;
-		}
+		if(WIN == conditions_of_victory())//胜利条件判定，所有胜利点必须均为@则返回胜利
+			return WIN;
 
 		//对用户提交的特殊需求进行处理
-		if(key=='B' || key=='b')
-			{//退出
-				return QUIT;
-			}
-			else if(key=='R' || key=='r')
-			{//重置关卡信息
-				Spx = spx, Spy = spy;
-				memcpy(map_cache, Map, sizeof(map_cache));
-				system("cls");
-				for (; row <= mapsize; row++)
-				{
-					puts(map_cache[row]);
-				}
-				row = 0;
-			}
-
+		if(key=='B' || key=='b')//退出
+			return QUIT;
+		else if(key=='R' || key=='r')
+			reset_checkpoint();
     }
+}
 
+
+//输出地图信息
+void print_map()
+{
+	system("cls");//刷新屏幕
+	for (row = 0; row <= mapsize; row++) 
+    {//逐行打印缓存的地图
+        puts(map_cache[row]);
+    }
+	row = 0;
+}
+
+//读取并对用户指令做出响应
+void wasd()
+{
+	key = getch();//读取指令
+
+	//判断用户输入的是上下左右中的哪一个
+	if(key=='w' || key=='W')
+		_w();
+
+	else if(key=='a' || key=='A')
+		_a();
+
+	else if(key=='s' || key=='S')
+		_s();
+
+	else if(key=='d' || key=='D')
+		_d();
+	
+	reset_winpoint();//移动完之后进行一次胜利点检查来恢复*
+}
+
+//重置胜利点*
+void reset_winpoint()
+{//在自机和箱子离开胜利点后，将胜利点恢复成*
+	for(temp = 0;temp<EPsize;temp++)
+	{
+		if(map_cache[epx[temp]][epy[temp]]=='O')
+			map_cache[epx[temp]][epy[temp]] = '@';
+		if(map_cache[epx[temp]][epy[temp]]!='@' && map_cache[epx[temp]][epy[temp]]!='S')
+			map_cache[epx[temp]][epy[temp]] = '*';
+	}
+}
+
+//胜利条件判断
+int conditions_of_victory()
+{
+	int win_count = 0;
+	for(temp=0;temp<EPsize;temp++)
+	{
+		if(map_cache[epx[temp]][epy[temp]] == '@')
+			win_count++;
+	}
+	if(win_count == EPsize)
+		return WIN;
+}
+
+//重置关卡信息
+void reset_checkpoint()
+{
+	Spx = spx, Spy = spy;
+	memcpy(map_cache, Map, sizeof(map_cache));
+	print_map();
 }

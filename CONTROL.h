@@ -14,4 +14,14 @@
 #define PUSH_RIGHT map_cache[Spx][Spy+2]!='#' && map_cache[Spx][Spy+1]=='O' && map_cache[Spx][Spy+2]!='O' && map_cache[Spx][Spy+2]!='@' || map_cache[Spx][Spy+1]=='@' && map_cache[Spx][Spy+2]!='#' && map_cache[Spx][Spy+2]!='@'
 #define PUSH_LEFT map_cache[Spx][Spy-2]!='#' && map_cache[Spx][Spy-1]=='O' && map_cache[Spx][Spy-2]!='O' && map_cache[Spx][Spy-2]!='@' || map_cache[Spx][Spy-1]=='@' && map_cache[Spx][Spy-2]!='#' && map_cache[Spx][Spy-2]!='@'
 
+#define WIN 1
+
+char map_cache [100][100];
+int Spx, Spy;
+
+extern void _s(void);
+extern void _w(void);
+extern void _d(void);
+extern void _a(void);
+
 #endif

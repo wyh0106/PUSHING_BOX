@@ -14,7 +14,6 @@
 #define RF_FAULT -1
 #define EM_FAULT -2
 #define PUSH_NULL 0
-#define WIN 1
 #define QUIT 2
 
 // 关卡资源文件地址
