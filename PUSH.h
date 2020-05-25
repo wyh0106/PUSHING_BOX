@@ -20,11 +20,15 @@
 #define CP "resource\\CP_INFO.json"
 #define BUFSIZE 256
 
+struct checkpoint
+{
+	int epx[10], epy[10], spx, spy;// 终点坐标，自机坐标
+	int mapsize, EPsize;// 地图列数，终点个数
+	char Map[100][100];// 用于缓存地图的二维数组
+	char cp_number[13];// 转译关卡名的字符串数组
+}checkpoint_info;
 // 用于缓存关卡资源信息的变量
-int epx[10], epy[10], spx, spy;// 终点坐标，自机坐标
-int mapsize, EPsize;// 地图列数，终点个数
-char Map[100][100];// 用于缓存地图的二维数组
-char cp_number[13];// 转译关卡名的字符串数组
+
 
 // 声明功能函数
 extern int get_info(int checkpoint);// 获取关卡信息函数

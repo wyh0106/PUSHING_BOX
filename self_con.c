@@ -47,7 +47,7 @@ int control(void)
 void print_map()
 {
 	system("cls");//刷新屏幕
-	for (row = 0; row <= mapsize; row++) 
+	for (row = 0; row <= checkpoint_info.mapsize; row++) 
     {//逐行打印缓存的地图
         puts(map_cache[row]);
     }
@@ -78,12 +78,12 @@ void wasd()
 //重置胜利点*
 void reset_winpoint()
 {//在自机和箱子离开胜利点后，将胜利点恢复成*
-	for(temp = 0;temp<EPsize;temp++)
+	for(temp = 0;temp<checkpoint_info.EPsize;temp++)
 	{
-		if(map_cache[epx[temp]][epy[temp]]=='O')
-			map_cache[epx[temp]][epy[temp]] = '@';
-		if(map_cache[epx[temp]][epy[temp]]!='@' && map_cache[epx[temp]][epy[temp]]!='S')
-			map_cache[epx[temp]][epy[temp]] = '*';
+		if(map_cache[checkpoint_info.epx[temp]][checkpoint_info.epy[temp]]=='O')
+			map_cache[checkpoint_info.epx[temp]][checkpoint_info.epy[temp]] = '@';
+		if(map_cache[checkpoint_info.epx[temp]][checkpoint_info.epy[temp]]!='@' && map_cache[checkpoint_info.epx[temp]][checkpoint_info.epy[temp]]!='S')
+			map_cache[checkpoint_info.epx[temp]][checkpoint_info.epy[temp]] = '*';
 	}
 }
 
@@ -91,19 +91,19 @@ void reset_winpoint()
 int conditions_of_victory()
 {
 	int win_count = 0;
-	for(temp=0;temp<EPsize;temp++)
+	for(temp=0;temp<checkpoint_info.EPsize;temp++)
 	{
-		if(map_cache[epx[temp]][epy[temp]] == '@')
+		if(map_cache[checkpoint_info.epx[temp]][checkpoint_info.epy[temp]] == '@')
 			win_count++;
 	}
-	if(win_count == EPsize)
+	if(win_count == checkpoint_info.EPsize)
 		return WIN;
 }
 
 //重置关卡信息
 void reset_checkpoint()
 {
-	Spx = spx, Spy = spy;
-	memcpy(map_cache, Map, sizeof(map_cache));
+	Spx = checkpoint_info.spx, Spy = checkpoint_info.spy;
+	memcpy(map_cache, checkpoint_info.Map, sizeof(map_cache));
 	print_map();
 }

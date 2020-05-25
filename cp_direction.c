@@ -16,29 +16,29 @@ int cp_transform(int _checkpoint)
 {
     switch(_checkpoint)
     {
-        case 1: strcat(cp_number, cp_);
-                strcat(cp_number, "1");
+        case 1: strcat(checkpoint_info.cp_number, cp_);
+                strcat(checkpoint_info.cp_number, "1");
                 break;
-        case 2: strcat(cp_number, cp_);
-                strcat(cp_number, "2");
+        case 2: strcat(checkpoint_info.cp_number, cp_);
+                strcat(checkpoint_info.cp_number, "2");
                 break;
-        case 3: strcat(cp_number, cp_);
-                strcat(cp_number, "3");
+        case 3: strcat(checkpoint_info.cp_number, cp_);
+                strcat(checkpoint_info.cp_number, "3");
                 break;
-        case 4: strcat(cp_number, cp_);
-                strcat(cp_number, "4");
+        case 4: strcat(checkpoint_info.cp_number, cp_);
+                strcat(checkpoint_info.cp_number, "4");
                 break;
-        case 5: strcat(cp_number, cp_);
-                strcat(cp_number, "5");
+        case 5: strcat(checkpoint_info.cp_number, cp_);
+                strcat(checkpoint_info.cp_number, "5");
                 break;
-        case 6: strcat(cp_number, cp_);
-                strcat(cp_number, "6");
+        case 6: strcat(checkpoint_info.cp_number, cp_);
+                strcat(checkpoint_info.cp_number, "6");
                 break;
-        case 7: strcat(cp_number, cp_);
-                strcat(cp_number, "7");
+        case 7: strcat(checkpoint_info.cp_number, cp_);
+                strcat(checkpoint_info.cp_number, "7");
                 break;
-        case 8: strcat(cp_number, cp_);
-                strcat(cp_number, "8");
+        case 8: strcat(checkpoint_info.cp_number, cp_);
+                strcat(checkpoint_info.cp_number, "8");
                 break;
         default: return EM_FAULT;
     }

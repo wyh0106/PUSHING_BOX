@@ -35,15 +35,15 @@ int get_info(int checkpoint_ID)
         strcat(cp,buf);
 
     cJSON *root = NULL, *checkpoint = NULL, *map = NULL,
-          *self_position = NULL, *end_position = NULL,
-          *mapline = NULL, *ep = NULL, *ep_v = NULL;//初始化cJSON变量
+          	*self_position = NULL, *end_position = NULL,
+          	*mapline = NULL, *ep = NULL, *ep_v = NULL;//初始化cJSON变量
     root = cJSON_Parse(cp);//解析json文本
     if(!root)//异常处理，返回错误代码
         printf("Error before: [%s]\n", cJSON_GetErrorPtr());
 
     else
     {
-        checkpoint = cJSON_GetObjectItem(root, cp_number);
+        checkpoint = cJSON_GetObjectItem(root, checkpoint_info.cp_number);
         map = cJSON_GetObjectItem(checkpoint, "map");
         self_position = cJSON_GetObjectItem(checkpoint, "self_position");
         end_position = cJSON_GetObjectItem(checkpoint, "end_position");
@@ -51,29 +51,28 @@ int get_info(int checkpoint_ID)
 
         //从关卡信息中获取地图信息，并保存到Map二维数组中
         int temp = 0;
-        mapsize = cJSON_GetArraySize(map);
-        for(; temp < mapsize; temp++)
+        checkpoint_info.mapsize = cJSON_GetArraySize(map);
+        for(; temp < checkpoint_info.mapsize; temp++)
         {
             mapline = cJSON_GetArrayItem(map, temp);
-            strcpy(Map[temp], mapline->valuestring);
+            strcpy(checkpoint_info.Map[temp], mapline->valuestring);
         }
 
         //从关卡信息中获取自机位置并保存到spx和spy中
-        spx = (cJSON_GetArrayItem(self_position, 0))->valueint;
-        spy = (cJSON_GetArrayItem(self_position, 1))->valueint;
+        checkpoint_info.spx = (cJSON_GetArrayItem(self_position, 0))->valueint;
+        checkpoint_info.spy = (cJSON_GetArrayItem(self_position, 1))->valueint;
 
         //从关卡信息中获取终点位置并保存到epx和epy数组中
-        EPsize = cJSON_GetArraySize(end_position);
-        for(temp = 0; temp < EPsize; temp++)
+        checkpoint_info.EPsize = cJSON_GetArraySize(end_position);
+        for(temp = 0; temp<checkpoint_info.EPsize; temp++)
         {
             ep = cJSON_GetArrayItem(end_position, temp);
             ep_v = cJSON_GetArrayItem(ep, 0);
-            epx[temp] = ep_v->valueint;
+            checkpoint_info.epx[temp] = ep_v->valueint;
             ep_v = cJSON_GetArrayItem(ep, 1);
-            epy[temp] = ep_v->valueint;
+            checkpoint_info.epy[temp] = ep_v->valueint;
         }
 
     }
-
-    return 0;
+	return 0;
 }
