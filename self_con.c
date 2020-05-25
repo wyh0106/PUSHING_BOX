@@ -80,10 +80,10 @@ void reset_winpoint()
 {//在自机和箱子离开胜利点后，将胜利点恢复成*
 	for(temp = 0;temp<checkpoint_info.EPsize;temp++)
 	{
-		if(map_cache[checkpoint_info.epx[temp]][checkpoint_info.epy[temp]]=='O')
-			map_cache[checkpoint_info.epx[temp]][checkpoint_info.epy[temp]] = '@';
-		if(map_cache[checkpoint_info.epx[temp]][checkpoint_info.epy[temp]]!='@' && map_cache[checkpoint_info.epx[temp]][checkpoint_info.epy[temp]]!='S')
-			map_cache[checkpoint_info.epx[temp]][checkpoint_info.epy[temp]] = '*';
+		if( map_cache[checkpoint_info.epx[temp]][checkpoint_info.epy[temp]]=='O')
+			map_cache[checkpoint_info.epx[temp]][checkpoint_info.epy[temp]]= '@';
+		if( map_cache[checkpoint_info.epx[temp]][checkpoint_info.epy[temp]]!='@' && map_cache[checkpoint_info.epx[temp]][checkpoint_info.epy[temp]]!='S')
+			map_cache[checkpoint_info.epx[temp]][checkpoint_info.epy[temp]]= '*';
 	}
 }
 
