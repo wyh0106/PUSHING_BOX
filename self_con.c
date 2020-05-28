@@ -12,6 +12,8 @@
 #include "CONTROL.h"
 #include "wasd.c"
 
+#define TIPS 3
+
 int row, temp;
 char key;
 
@@ -51,6 +53,7 @@ void print_map()
     {//逐行打印缓存的地图
         puts(map_cache[row]);
     }
+	UI(TIPS);
 	row = 0;
 }
 

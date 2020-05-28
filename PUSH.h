@@ -30,8 +30,9 @@ struct checkpoint
 }checkpoint_info;
 
 // 声明功能函数
-extern int get_info(int checkpoint);// 获取关卡信息函数
-extern int cp_transform(int _checkpoint);// 关卡名转译函数
+extern int get_info(char checkpoint);// 获取关卡信息函数
+extern int cp_transform(char _checkpoint);// 关卡名转译函数
 extern int control(void);// 自机控制函数
+extern void UI(int UI_type);//UI界面
 
 #endif

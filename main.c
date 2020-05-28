@@ -13,46 +13,52 @@
 #include <windows.h>
 
 #include "PUSH.h"
+#include "CONTROL.h"
 #include "get_cp_info.c"
 #include "cp_direction.c"
 #include "self_con.c"
+#include "UI.c"
+
+#define SELECT 0
 
 int main(void)
 {
-    int Key, li, error_massage, CP_NUMBER;
+    int li, error_massage;
+	char Key;
 
-    //输入对应关卡
-	while(li != QUIT)
+	do
 	{
-		printf("\nPlease enter what level you want to play:");
-		scanf("%d", &CP_NUMBER);
+		UI(SELECT);
+		//输入对应关卡
+		reset:
+		Key = getch();
+		if('Q'==Key || 'q'==Key)
+			return 0;
+
+		if(Key!='1' && Key!='2' && Key!='3')
+			goto reset;
 
 		//错误代码处理，为0则正常运行
-		error_massage = get_info(CP_NUMBER);
+		error_massage = get_info(Key);
 		switch(error_massage)
 		{
-			case -2:printf("Unknown mistake!\nCheck the function: get_info.\n");
+			case -2:printf("\nUnknown mistake!\nCheck the function: get_info.\n");
 					return -1;
-			case -1:printf("Ensure the resource file are legal.");
+			case -1:printf("\nEnsure the resource file are legal.");
 					return -1;
-			case  0:printf("Loading resource file succeessful.\n");
-					li = QUIT;//只有正常运行才不会重复请求输入关卡号码
+			case  0:li = QUIT;//只有正常运行才不会重复请求输入关卡号码
 					break;
 		}
-	}
-
-	//自机控制
-	Key = control();
-	//胜利条件检测及胜利界面打印
-	if(Key == WIN)
-	{
-		system("cls");
-		puts("==========");
-		puts(" YOU WIN!");
-		puts("==========");
-	}
+		//自机控制
+		Key = control();
+		//胜利条件检测及胜利界面打印
+		if(Key == WIN)
+		{
+			UI(WIN);
+			system("pause");
+		}
+	}while(key);
 
 	system("pause");
-
-    return 0;
+	return 0;
 }

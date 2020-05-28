@@ -12,32 +12,32 @@
 
 #define cp_ "checkpoint_"
 
-int cp_transform(int _checkpoint)
+int cp_transform(char _checkpoint)
 {
     switch(_checkpoint)
     {
-        case 1: strcat(checkpoint_info.cp_number, cp_);
+        case '1': strcat(checkpoint_info.cp_number, cp_);
                 strcat(checkpoint_info.cp_number, "1");
                 break;
-        case 2: strcat(checkpoint_info.cp_number, cp_);
+        case '2': strcat(checkpoint_info.cp_number, cp_);
                 strcat(checkpoint_info.cp_number, "2");
                 break;
-        case 3: strcat(checkpoint_info.cp_number, cp_);
+        case '3': strcat(checkpoint_info.cp_number, cp_);
                 strcat(checkpoint_info.cp_number, "3");
                 break;
-        case 4: strcat(checkpoint_info.cp_number, cp_);
+        case '4': strcat(checkpoint_info.cp_number, cp_);
                 strcat(checkpoint_info.cp_number, "4");
                 break;
-        case 5: strcat(checkpoint_info.cp_number, cp_);
+        case '5': strcat(checkpoint_info.cp_number, cp_);
                 strcat(checkpoint_info.cp_number, "5");
                 break;
-        case 6: strcat(checkpoint_info.cp_number, cp_);
+        case '6': strcat(checkpoint_info.cp_number, cp_);
                 strcat(checkpoint_info.cp_number, "6");
                 break;
-        case 7: strcat(checkpoint_info.cp_number, cp_);
+        case '7': strcat(checkpoint_info.cp_number, cp_);
                 strcat(checkpoint_info.cp_number, "7");
                 break;
-        case 8: strcat(checkpoint_info.cp_number, cp_);
+        case '8': strcat(checkpoint_info.cp_number, cp_);
                 strcat(checkpoint_info.cp_number, "8");
                 break;
         default: return EM_FAULT;

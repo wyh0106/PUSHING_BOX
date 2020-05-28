@@ -23,7 +23,7 @@ cJSON *root = NULL, *checkpoint = NULL, *map = NULL,
     *self_position = NULL, *end_position = NULL,
   	*mapline = NULL, *EP = NULL, *ep_v = NULL;
 
-int get_info(int checkpoint_ID)
+int get_info(char checkpoint_ID)
 {
     FILE *level_INFO;//文件指针
 	char buf[256], cp[2048]={0};//初始化可能用到的变量
@@ -41,8 +41,13 @@ int get_info(int checkpoint_ID)
         return RF_FAULT;
     }
 
-    while(fgets(buf, BUFSIZE, level_INFO))//把关卡信息文件字符串化，以便后续解析
-        strcat(cp,buf);
+	char ch;
+    while(-1 != (ch=fgetc(level_INFO)))//把关卡信息文件字符串化，以便后续解析
+    {
+		cp[temp] = ch;
+		temp++;
+	}
+	temp = 0;
 
     root = cJSON_Parse(cp);//解析json文本
     if(!root)//异常处理，返回错误代码
