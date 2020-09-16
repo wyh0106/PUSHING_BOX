@@ -10,6 +10,8 @@
 #ifndef _PUSH__H
 #define _PUSH__H
 
+#include "cJSON\cJSON.h"
+
 // 声明返回信息含义
 #define RF_FAULT -1
 #define EM_FAULT -2
@@ -19,6 +21,10 @@
 // 关卡资源文件地址
 #define CP "resource\\CP_INFO.json"
 #define BUFSIZE 256
+
+cJSON *root, *checkpoint, *map,
+*self_position, *end_position,
+*mapline;
 
 // 用于缓存关卡资源信息的变量
 struct checkpoint

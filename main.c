@@ -12,6 +12,8 @@
 #include <string.h>
 #include <windows.h>
 
+#include "cJSON\cJSON.h"
+
 #include "PUSH.h"
 #include "CONTROL.h"
 #include "get_cp_info.c"
@@ -23,41 +25,54 @@
 
 int main(void)
 {
-    int li, error_massage;
-	char Key;
+    int count = 0, error_massage;
+	char level = 2;
 
-	do
+	// system("pause");
+
+	while(level)
 	{
+		// if(count>=1)
+		// {
+		// 	printf("");
+		// }
 		UI(SELECT);
 		//输入对应关卡
 		reset:
-		Key = getch();
-		if('Q'==Key || 'q'==Key)
+		level = getch();
+		if('Q'==level || 'q'==level)
 			return 0;
 
-		if(Key!='1' && Key!='2' && Key!='3')
+		if(level!='1' && level!='2' && level!='3')
 			goto reset;
 
 		//错误代码处理，为0则正常运行
-		error_massage = get_info(Key);
+		error_massage = get_info(level);
 		switch(error_massage)
 		{
 			case -2:printf("\nUnknown mistake!\nCheck the function: get_info.\n");
 					return -1;
 			case -1:printf("\nEnsure the resource file are legal.");
 					return -1;
-			case  0:li = QUIT;//只有正常运行才不会重复请求输入关卡号码
+			case  0:level = QUIT;//只有正常运行才不会重复请求输入关卡号码
 					break;
 		}
 		//自机控制
-		Key = control();
+		level = control();
 		//胜利条件检测及胜利界面打印
-		if(Key == WIN)
+		if(level == WIN)
 		{
 			UI(WIN);
+			cJSON_Delete(root);
+			cJSON_Delete(checkpoint);
+			cJSON_Delete(map);
+			cJSON_Delete(mapline);
+			cJSON_Delete(self_position);
+			cJSON_Delete(end_position);
 			system("pause");
 		}
-	}while(key);
+		// count++;
+	}
 
 	system("pause");
 	return 0;
